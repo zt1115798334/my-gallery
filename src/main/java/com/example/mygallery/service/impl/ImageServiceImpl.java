@@ -49,7 +49,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void writeImageFile(List<ImageInfo> imageInfos, String folder) throws FileNotFoundException {
+    public void writeImageFile(List<ImageInfo> imageInfos, String folder) {
         String localPath = galleryProperties.getLocalPath() + File.separator + folder + File.separator;
         File file = new File(localPath);
         if (!file.exists()) {
@@ -58,13 +58,19 @@ public class ImageServiceImpl implements ImageService {
         }
         String imageDownUrl = galleryProperties.getImageDownUrl();
         Map<String, Object> params = defaultImageDownParams();
-        for (ImageInfo imageInfo : imageInfos) {
 
+        imageInfos.parallelStream().forEach(imageInfo -> {
             String url = imageInfo.getUrl().replace("r/__85", "m/" + 2560 + "_" + 1600 + "_" + 100);
             params.put("url", url);
-            DataOutputStream out = new DataOutputStream(new FileOutputStream(localPath + System.currentTimeMillis() + ".jpg"));
+            DataOutputStream out = null;
+            try {
+                out = new DataOutputStream(new FileOutputStream(localPath + System.currentTimeMillis() + ".jpg"));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             HttpClientUtils.getInstance().httpGetDownFile(imageDownUrl, params, out);
-        }
+        });
+
 
     }
 

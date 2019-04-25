@@ -11,9 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 @RunWith(SpringRunner.class)
@@ -32,7 +29,7 @@ public class MyGalleryApplicationTests {
     }
 
     @Test
-    public void testFindAllImage(){
+    public void testFindAllImage() {
         JSONObject jsonObject = JSON.parseObject("{\n" +
                 "    \"ad_id\": \"\",\n" +
                 "    \"ad_img\": \"\",\n" +
@@ -63,11 +60,7 @@ public class MyGalleryApplicationTests {
                 "    \"utag\": \"韩国 园林 春天\"\n" +
                 "}");
         ImageInfo imageInfo = JSONObject.toJavaObject(jsonObject, ImageInfo.class);
-        try {
-            imageService.writeImageFile(Collections.singletonList(imageInfo), "");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        imageService.writeImageFile(Collections.singletonList(imageInfo), "");
 
     }
 

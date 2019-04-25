@@ -4,7 +4,6 @@ import com.example.mygallery.entity.ImageClass;
 import com.example.mygallery.entity.ImageInfo;
 import com.example.mygallery.entity.ImagePage;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -20,6 +19,6 @@ public interface ImageService {
 
     ImagePage<ImageInfo> findAllImageInfo(Long cid, Long pageNumber, Long pageSize);
 
-    void writeImageFile(List<ImageInfo> imageInfos,String folder) throws FileNotFoundException;
+    void writeImageFile(List<ImageInfo> imageInfos, String folder);
 
 }

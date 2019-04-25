@@ -10,7 +10,6 @@ import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
@@ -48,11 +47,7 @@ public class CollectionImageJob implements Job {
                     String className = imageClass.getName();
 
                     List<ImageInfo> imageInfos = findAllImage(classId);
-                    try {
-                        imageService.writeImageFile(imageInfos, className);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    imageService.writeImageFile(imageInfos, className);
 
                 });
     }
